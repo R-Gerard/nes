@@ -1,7 +1,10 @@
 CFLAGS += -Wall -Wextra
+CFLAGS += $(shell pkg-config --cflags libpng)
 CXXFLAGS += -Wall -Wextra
+CXXFLAGS += $(shell pkg-config --cflags libpng)
 CXXFLAGS += -fno-exceptions -fno-rtti
-LDFLAGS += -Wl,-as-needed -Wl,-O1
+#LDFLAGS += -Wl,-as-needed -Wl,-O1
+LDFLAGS += $(shell pkg-config --libs libpng)
 
 .phony: all clean
 all: png2chr chr2png sametiles tilecoords nes2hex pngreorder png2gba \
@@ -9,28 +12,28 @@ all: png2chr chr2png sametiles tilecoords nes2hex pngreorder png2gba \
 	coord2lz4
 
 png2chr: png2chr.o common.o
-	$(CC) -o $@ $^ $(CFLAGS) $(LDFLAGS) -lpng
+	$(CC) -o $@ $^ $(CFLAGS) $(PNG_CFLAGS) $(LDFLAGS)
 
 png2gba: png2gba.o common.o
-	$(CC) -o $@ $^ $(CFLAGS) $(LDFLAGS) -lpng
+	$(CC) -o $@ $^ $(CFLAGS) $(LDFLAGS)
 
 chr2png: chr2png.o common.o
-	$(CC) -o $@ $^ $(CFLAGS) $(LDFLAGS) -lpng
+	$(CC) -o $@ $^ $(CFLAGS) $(LDFLAGS)
 
 sametiles: sametiles.o common.o
-	$(CC) -o $@ $^ $(CFLAGS) $(LDFLAGS) -lpng
+	$(CC) -o $@ $^ $(CFLAGS) $(LDFLAGS)
 
 tilecoords: tilecoords.o common.o
-	$(CC) -o $@ $^ $(CFLAGS) $(LDFLAGS) -lpng
+	$(CC) -o $@ $^ $(CFLAGS) $(LDFLAGS)
 
 nes2hex: nes2hex.o common.o
-	$(CC) -o $@ $^ $(CFLAGS) $(LDFLAGS) -lpng
+	$(CC) -o $@ $^ $(CFLAGS) $(LDFLAGS)
 
 pngreorder: pngreorder.o common.o
-	$(CC) -o $@ $^ $(CFLAGS) $(LDFLAGS) -lpng
+	$(CC) -o $@ $^ $(CFLAGS) $(LDFLAGS)
 
 palstat: palstat.o common.o
-	$(CC) -o $@ $^ $(CFLAGS) $(LDFLAGS) -lpng
+	$(CC) -o $@ $^ $(CFLAGS) $(LDFLAGS)
 
 coord2metasprite: coord2metasprite.o common.o
 
